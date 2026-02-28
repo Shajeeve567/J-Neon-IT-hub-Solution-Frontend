@@ -157,13 +157,13 @@ export default function ServiceContactPage() {
 
                                 {status === 'success' && (
                                     <p className="form-success">
-                                        ✅ Message sent successfully!
+                                        Message sent successfully!
                                     </p>
                                 )}
 
                                 {status === 'error' && (
                                     <p className="form-error">
-                                        ✅ Message sent successfully!
+                                        Some thing went wrong. Please try again later/
                                     </p>
                                 )}
 
