@@ -47,26 +47,21 @@ export default function Footer() {
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 2.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l1.06-1.06a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
                             </svg>
-                            <span>+1 (555) 123-4567</span>
+                            <span>+94 77 3079 159</span>
                         </div>
                         <div className="footer__contact-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" />
                             </svg>
-                            <span>New York, NY</span>
+                            <span>BUILDING,190/07, NALLAYAN STREET, PETTAH, MANNAR.</span>
                         </div>
                     </div>
                 </div>
 
                 <div className="footer__bottom">
                     <span className="footer__copyright">
-                        © 2023 J-NEON IT HUB. All rights reserved.
+                        © 2026 J-NEON IT HUB. All rights reserved.
                     </span>
-                    <div className="footer__socials">
-                        <a href="#">Twitter</a>
-                        <a href="#">LinkedIn</a>
-                        <a href="#">GitHub</a>
-                    </div>
                 </div>
             </div>
         </footer>

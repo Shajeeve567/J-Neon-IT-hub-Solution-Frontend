@@ -163,7 +163,7 @@ export default function ServiceContactPage() {
 
                                 {status === 'error' && (
                                     <p className="form-error">
-                                        Some thing went wrong. Please try again later/
+                                        Some thing went wrong. Please try again later
                                     </p>
                                 )}
 

@@ -14,9 +14,12 @@ const timeline = [
 ]
 
 const leadership = [
-    { name: 'James Neon', title: 'FOUNDER & CEO', img: imgCeo, desc: 'Visionary architect with 15+ years in high-scale infrastructure.' },
-    { name: 'Sarah Chen', title: 'CTO', img: imgCto, desc: 'Expert in cybersecurity forensics and cloud neural networks.' },
-    { name: 'Marcus Thorne', title: 'HEAD OF OPERATIONS', img: imgCoo, desc: 'Operational strategist ensuring 99.99% uptime for global clients.' },
+    { 
+        name: 'Anton Jaan Jenushan Miranda', 
+        title: 'FOUNDER & CEO', 
+        img: imgCeo, 
+        desc: 'Visionary architect with 15+ years in high-scale infrastructure.' 
+    }
 ]
 
 export default function AboutPage() {
@@ -110,10 +113,6 @@ export default function AboutPage() {
                         <div className="about-leadership__grid">
                             {leadership.map((member, i) => (
                                 <div key={i} className="leader-card">
-                                    <div className="leader-card__img-wrap">
-                                        <img src={member.img} alt={member.name} className="leader-card__img" />
-                                        <div className="leader-card__overlay" />
-                                    </div>
                                     <div className="leader-card__info">
                                         <h3 className="leader-card__name">{member.name}</h3>
                                         <span className="leader-card__title">{member.title}</span>
@@ -133,7 +132,7 @@ export default function AboutPage() {
                             READY TO<br />
                             <span className="gradient-text">UPGRADE?</span>
                         </h2>
-                        <Link to="/#contact" className="btn-primary">SEND INQUIRY</Link>
+                        <Link to="/services/consultation" className="btn-primary">SEND INQUIRY</Link>
                     </div>
                 </section>
             </main>
