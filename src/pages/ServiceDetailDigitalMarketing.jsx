@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
@@ -11,75 +10,36 @@ const plans = [
         tier: 'Basic',
         forText: 'For Personal Use',
         price: '$20',
-        features: ['Responsive Website', 'Up to 5 Pages', 'Basic SEO', 'Contact Form'],
+        features: ['Social Media Setup', 'Monthly Report', 'Basic Analytics', 'Email Campaign'],
     },
     {
         tier: 'Standard',
         forText: 'For Growing Businesses',
         price: '$100',
-        features: ['Custom Design & CMS', 'Up to 15 Pages', 'Advanced SEO', 'E-commerce Ready'],
+        features: ['Multi-Platform Ads', 'Weekly Reports', 'A/B Testing', 'Content Calendar'],
     },
     {
         tier: 'Premium',
         forText: 'For Enterprise',
         price: '$200',
-        features: ['Full-Stack Development', 'Unlimited Pages', 'Priority Support', 'Analytics Dashboard'],
+        features: ['Full Strategy', 'Dedicated Manager', 'Influencer Outreach', 'ROI Dashboard'],
     },
 ]
 
-export default function ServiceDetailWebDev() {
-
-    const { slug } = useParams() // /services/:slug
-    const [service, setService] = useState(null)
-    const [loading, setLoading] = useState(true)
-
-    useEffect(() => {
-        fetch(`http://localhost:8080/api/services/slug/${slug}`)
-            .then(res => res.json())
-            .then(data => {
-                setService(data)
-                setLoading(false)
-            })
-            .catch(err => {
-                console.error(err)
-                setLoading(false)
-            })
-    }, [slug])
-
-    if (loading) return <p>Loading...</p>
-    if (!service) return <p>Service not found</p>
-
-    return (
-        <>
-            <Navbar />
-
-            <main className="page">
-
-                {/* ── Hero ── */}
-                <section className="svc-detail-hero">
-                    <h1 className="svc-detail-hero__title">
-                        <span>{service.title.toUpperCase()}</span>
-                    </h1>
-                    <p className="svc-detail-hero__desc">
-                        {service.shortDescription}
-                    </p>
-                </section>
-
-                {/* ── Pricing Plans (Static for now) ── */}
+export default function ServiceDetailDigitalMarketing() {
     return (
         <>
             <Navbar />
             <main className="page">
                 <section className="svc-detail-hero">
                     <h1 className="svc-detail-hero__title">
-                        <span>WEB</span>
-                        <br />DEVELOPMENT
+                        <span>DIGITAL</span>
+                        <br />MARKETING
                     </h1>
                     <p className="svc-detail-hero__desc">
-                        Web development is our craft. We take ideas and turn them into fully functional websites.
-                        Whether it's building a custom site from scratch, ensuring a smooth mobile experience,
-                        or updating a store's backend, we focus on writing clean code to solve problems and help
-                        businesses establish a strong online presence.
+                        Digital marketing is our specialty. We create data-driven campaigns that grow your reach, improve
+                        brand visibility, and drive measurable ROI. From SEO and SEM to social media and content
+                        strategies, we tailor every campaign to your market and goals.
                     </p>
                 </section>
 
@@ -102,20 +62,11 @@ export default function ServiceDetailWebDev() {
                                 <div className="plan-card__tier">{plan.tier}</div>
                                 <div className="plan-card__for">{plan.forText}</div>
                                 <div className="plan-card__price">{plan.price}</div>
-
-                                <Link 
-                                    to={`/contact?service=${service.slug}`} 
-                                    className="plan-card__cta"
-                                >
-                                    Get Your Quote
-                                </Link>
-
+                                <Link to="/about" className="plan-card__cta">Get Your Quote</Link>
                                 <div className="plan-card__divider">
                                     <img src={imgLine} alt="" />
                                 </div>
-
                                 <p className="plan-card__what">What you'll get</p>
-
                                 <ul className="plan-card__features">
                                     {plan.features.map((f, j) => (
                                         <li key={j}>{'> '}{f}</li>
@@ -125,9 +76,7 @@ export default function ServiceDetailWebDev() {
                         ))}
                     </div>
                 </section>
-
             </main>
-
             <Footer />
         </>
     )
