@@ -90,6 +90,13 @@ export default function Services({ limit, showViewAll }) {
                     </p>
                 </div>
 
+                <div className="fade-in" style={{ transitionDelay: '0.15s' }}>
+                    {displayed.map((s, i) => (
+                        <ServiceRow key={i} service={s} />
+                    ))}
+                </div>
+
+                {showViewAll && (
                 {loading ? (
                     <div className="fade-in services-loading">
                         <div className="services-spinner"></div>
