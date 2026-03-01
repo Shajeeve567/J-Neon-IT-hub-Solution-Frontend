@@ -1,8 +1,6 @@
 import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import './index.css'
-import LoginPage from './pages/login'
-import ServiceContactPage from './pages/ServiceContact'
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import PortfolioPage from './pages/PortfolioPage'
@@ -23,8 +21,6 @@ export default function App() {
     <>
       <ScrollToTop />
       <Routes>
-        <Route path="/login" element={<LoginPage />}/>
-        <Route path="/services/consultation" element={<ServiceContactPage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/portfolio" element={<PortfolioPage />} />

@@ -19,7 +19,6 @@ export default function Navbar() {
             <li><Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>ABOUT</Link></li>
           </ul>
 
-          <Link to={isHome ? '#contact' : '/services/consultation'} className="navbar__cta" onClick={isHome ? undefined : undefined}>
           <Link to={isHome ? '#contact' : '/'} className="navbar__cta" onClick={isHome ? undefined : undefined}>
             GET STARTED
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

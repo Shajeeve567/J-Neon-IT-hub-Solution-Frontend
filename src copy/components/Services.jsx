@@ -31,7 +31,6 @@ const services = [
         path: '/services',
     },
 ]
-import useServices from '../hooks/useServices'
 
 function ServiceRow({ service }) {
     const [open, setOpen] = useState(false)
@@ -97,31 +96,6 @@ export default function Services({ limit, showViewAll }) {
                 </div>
 
                 {showViewAll && (
-                {loading ? (
-                    <div className="fade-in services-loading">
-                        <div className="services-spinner"></div>
-                        <p>Loading services...</p>
-                    </div>
-                ) : error ? (
-                    <div className="fade-in services-error">
-                        <p>{error}</p>
-                        <button onClick={refetch} className="retry-button">
-                            Try Again
-                        </button>
-                    </div>
-                ) : services.length === 0 ? (
-                    <div className="fade-in" style={{ padding: '40px 0', textAlign: 'center' }}>
-                        <p>No services found</p>
-                    </div>
-                ) : (
-                    <div className="fade-in" style={{ transitionDelay: '0.15s' }}>
-                        {displayed.map((s) => (
-                            <ServiceRow key={s.id} service={s} />
-                        ))}
-                    </div>
-                )}
-
-                {showViewAll && !loading && !error && services.length > 0 && (
                     <div className="view-all-row fade-in">
                         <Link to="/services" className="view-all-btn">
                             VIEW ALL SERVICES
