@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
@@ -28,44 +27,6 @@ const plans = [
 ]
 
 export default function ServiceDetailWebDev() {
-
-    const { slug } = useParams() // /services/:slug
-    const [service, setService] = useState(null)
-    const [loading, setLoading] = useState(true)
-
-    useEffect(() => {
-        fetch(`http://localhost:8080/api/services/slug/${slug}`)
-            .then(res => res.json())
-            .then(data => {
-                setService(data)
-                setLoading(false)
-            })
-            .catch(err => {
-                console.error(err)
-                setLoading(false)
-            })
-    }, [slug])
-
-    if (loading) return <p>Loading...</p>
-    if (!service) return <p>Service not found</p>
-
-    return (
-        <>
-            <Navbar />
-
-            <main className="page">
-
-                {/* ── Hero ── */}
-                <section className="svc-detail-hero">
-                    <h1 className="svc-detail-hero__title">
-                        <span>{service.title.toUpperCase()}</span>
-                    </h1>
-                    <p className="svc-detail-hero__desc">
-                        {service.shortDescription}
-                    </p>
-                </section>
-
-                {/* ── Pricing Plans (Static for now) ── */}
     return (
         <>
             <Navbar />
@@ -102,20 +63,11 @@ export default function ServiceDetailWebDev() {
                                 <div className="plan-card__tier">{plan.tier}</div>
                                 <div className="plan-card__for">{plan.forText}</div>
                                 <div className="plan-card__price">{plan.price}</div>
-
-                                <Link 
-                                    to={`/contact?service=${service.slug}`} 
-                                    className="plan-card__cta"
-                                >
-                                    Get Your Quote
-                                </Link>
-
+                                <Link to="/about" className="plan-card__cta">Get Your Quote</Link>
                                 <div className="plan-card__divider">
                                     <img src={imgLine} alt="" />
                                 </div>
-
                                 <p className="plan-card__what">What you'll get</p>
-
                                 <ul className="plan-card__features">
                                     {plan.features.map((f, j) => (
                                         <li key={j}>{'> '}{f}</li>
@@ -125,9 +77,7 @@ export default function ServiceDetailWebDev() {
                         ))}
                     </div>
                 </section>
-
             </main>
-
             <Footer />
         </>
     )
