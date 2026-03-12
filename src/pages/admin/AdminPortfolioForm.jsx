@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Trash2, Plus } from 'lucide-react';
-import { getPortfolioItemById, createPortfolioItem, updatePortfolioItem } from '../../services/portfolioService';
+import { getPortfolioItemById, createPortfolioItem, updatePortfolioItem, addPortfolioImage, getPortfolioImages, updatePortfolioImage } from '../../services/portfolioService';
 import styles from './adminPortfolioForm.module.css';
 
 export default function AdminPortfolioForm({ isEdit = false }) {
@@ -18,6 +18,7 @@ export default function AdminPortfolioForm({ isEdit = false }) {
         completedDate: '',
         description: '',
         imageUrl: '',
+        imageId: null,
         projectUrl: '',
         technologies: []
     });
@@ -33,20 +34,29 @@ export default function AdminPortfolioForm({ isEdit = false }) {
     const fetchProject = async () => {
         try {
             const data = await getPortfolioItemById(id);
-            setFormData(data);
+            let firstImage = null;
+            try {
+                const images = await getPortfolioImages(id);
+                if (images && images.length > 0) {
+                    firstImage = images[0];
+                }
+            } catch (err) {
+                console.error("Failed to fetch images for project", err);
+            }
+
+            setFormData({
+                title: data.title || '',
+                clientName: data.clientName || '',
+                category: data.summary || '', // Mapped summary to category
+                completedDate: data.projectDate || '', // Mapped projectDate
+                description: data.description || '',
+                imageUrl: firstImage ? firstImage.imageUrl : '',
+                imageId: firstImage ? firstImage.id : null,
+                projectUrl: data.projectUrl || '',
+                technologies: [] // Backend doesn't support technologies yet
+            });
         } catch (error) {
             console.error("Error fetching project for edit:", error);
-            // Fallback for mocked UI if backend isn't ready
-            setFormData({
-                title: 'E-Commerce Platform',
-                clientName: 'TechStore Inc',
-                category: 'Web Development',
-                completedDate: '2023-10-15',
-                description: 'A full-stack e-commerce solution with payment integration and inventory management.',
-                imageUrl: 'https://images.unsplash.com/photo-1661956602116-aa6865609028?w=800&auto=format&fit=crop&q=60',
-                projectUrl: '#',
-                technologies: ['React', 'Node.js', 'PostgreSQL', 'Stripe']
-            });
         } finally {
             setLoading(false);
         }
@@ -78,11 +88,33 @@ export default function AdminPortfolioForm({ isEdit = false }) {
         e.preventDefault();
         setSubmitting(true);
 
+        const payload = {
+            title: formData.title,
+            slug: formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''),
+            clientName: formData.clientName,
+            summary: formData.category,
+            description: formData.description,
+            projectDate: formData.completedDate || null,
+            projectUrl: formData.projectUrl,
+            imageUrl: formData.imageUrl,
+            technologies: formData.technologies,
+            isPublished: true,
+            sortOrder: 0
+        };
+
         try {
             if (isEdit) {
-                await updatePortfolioItem(id, formData);
+                await updatePortfolioItem(id, payload);
+                if (formData.imageUrl && formData.imageId) {
+                    await updatePortfolioImage(id, formData.imageId, { imageUrl: formData.imageUrl, isCover: true, sortOrder: 0 });
+                } else if (formData.imageUrl && !formData.imageId) {
+                    await addPortfolioImage(id, { imageUrl: formData.imageUrl, isCover: true, sortOrder: 0 });
+                }
             } else {
-                await createPortfolioItem(formData);
+                const newItem = await createPortfolioItem(payload);
+                if (formData.imageUrl && newItem && newItem.id) {
+                    await addPortfolioImage(newItem.id, { imageUrl: formData.imageUrl, isCover: true, sortOrder: 0 });
+                }
             }
             navigate('/admin/portfolio');
         } catch (error) {

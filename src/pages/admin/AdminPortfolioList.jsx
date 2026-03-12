@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plus, Edit2, Trash2, ExternalLink } from 'lucide-react';
-import { getPortfolioItems, deletePortfolioItem } from '../../services/portfolioService';
+import { getPortfolioItems, deletePortfolioItem, getPortfolioImages } from '../../services/portfolioService';
 import styles from './adminPortfolioList.module.css';
 
 export default function AdminPortfolioList() {
     const navigate = useNavigate();
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [projectToDelete, setProjectToDelete] = useState(null);
 
     useEffect(() => {
         fetchProjects();
@@ -16,50 +17,49 @@ export default function AdminPortfolioList() {
     const fetchProjects = async () => {
         setLoading(true);
         try {
-            // Check if backend provides mock data initially
             const data = await getPortfolioItems();
-            setProjects(data || []);
+
+            // Map over each item to fetch its image array
+            const projectsWithImages = await Promise.all((data || []).map(async (project) => {
+                try {
+                    const images = await getPortfolioImages(project.id);
+                    const imageUrl = images && images.length > 0 ? images[0].imageUrl : null;
+                    return { ...project, imageUrl };
+                } catch (e) {
+                    console.error("Failed to fetch image for project", project.id, e);
+                    return { ...project, imageUrl: null };
+                }
+            }));
+
+            setProjects(projectsWithImages);
         } catch (error) {
             console.error("Failed to load projects", error);
-            // Fallback mock data if backend not connected yet
-            setProjects([
-                {
-                    id: 1,
-                    title: 'E-Commerce Platform',
-                    clientName: 'TechStore Inc',
-                    category: 'Web Development',
-                    description: 'A full-stack e-commerce solution with payment integration and inventory management.',
-                    imageUrl: 'https://images.unsplash.com/photo-1661956602116-aa6865609028?w=800&auto=format&fit=crop&q=60',
-                    projectUrl: '#',
-                    technologies: ['React', 'Node.js', 'PostgreSQL', 'Stripe']
-                },
-                {
-                    id: 2,
-                    title: 'Brand Refresh',
-                    clientName: 'Creative Agency',
-                    category: 'UI/UX Design',
-                    description: 'Complete brand overhaul including website redesign and marketing materials.',
-                    imageUrl: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&auto=format&fit=crop&q=60',
-                    projectUrl: '#',
-                    technologies: ['Figma', 'Adobe CC']
-                }
-            ]);
+            setProjects([]);
         } finally {
             setLoading(false);
         }
     };
 
-    const handleDelete = async (id) => {
-        if (window.confirm("Are you sure you want to delete this project?")) {
-            try {
-                await deletePortfolioItem(id);
-                setProjects(projects.filter(p => p.id !== id));
-            } catch (error) {
-                alert("Failed to delete the project.");
-                // Optimistic UI update in case backend fails
-                setProjects(projects.filter(p => p.id !== id));
-            }
+    const handleDelete = (id) => {
+        setProjectToDelete(id);
+    };
+
+    const confirmDelete = async () => {
+        if (!projectToDelete) return;
+
+        try {
+            await deletePortfolioItem(projectToDelete);
+            setProjects(projects.filter(p => p.id !== projectToDelete));
+            setProjectToDelete(null);
+        } catch (error) {
+            const errorMsg = error.response?.data?.message || error.message || 'Unknown error';
+            alert(`Failed to delete the project: ${errorMsg}`);
+            setProjectToDelete(null);
         }
+    };
+
+    const cancelDelete = () => {
+        setProjectToDelete(null);
     };
 
     return (
@@ -87,11 +87,11 @@ export default function AdminPortfolioList() {
                         <div key={project.id || project.title} className={styles.card}>
                             <div className={styles.imageContainer}>
                                 <img
-                                    src={project.imageUrl || 'https://via.placeholder.com/400x200?text=No+Image'}
+                                    src={project.imageUrl || 'https://via.placeholder.com/400x200?text=' + encodeURIComponent(project.title || 'Project')}
                                     alt={project.title}
                                     className={styles.projectImage}
                                 />
-                                <span className={styles.categoryBadge}>{project.category}</span>
+                                <span className={styles.categoryBadge}>{project.summary || 'Portfolio'}</span>
                             </div>
 
                             <div className={styles.cardContent}>
@@ -136,6 +136,20 @@ export default function AdminPortfolioList() {
                             </div>
                         </div>
                     ))}
+                </div>
+            )}
+
+            {/* Custom Delete Confirmation Modal */}
+            {projectToDelete && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
+                        <h3>Confirm Deletion</h3>
+                        <p>Are you sure you want to delete this project? This action cannot be undone.</p>
+                        <div className={styles.modalActions}>
+                            <button className={styles.cancelBtn} onClick={cancelDelete}>Cancel</button>
+                            <button className={styles.confirmDeleteBtn} onClick={confirmDelete}>Delete</button>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>
