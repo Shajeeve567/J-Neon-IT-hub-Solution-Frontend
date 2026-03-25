@@ -2590,3 +2590,12 @@ img {
   padding: 10px;
   border-radius: 6px;
 }
+
+.errorMessage {
+    background: #ffe5e5;
+    color: #d60000;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
