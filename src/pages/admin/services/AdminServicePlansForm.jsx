@@ -211,14 +211,12 @@ const AdminServicePlansForm = () => {
                             <label>Currency</label>
                             <select name="currency" value={formData.currency} onChange={handleChange}>
                                 <option value="USD">USD ($)</option>
-                                <option value="EUR">EUR (€)</option>
-                                <option value="GBP">GBP (£)</option>
-                                <option value="JPY">JPY (¥)</option>
+                                <option value="LKR">LKR (LKR)</option>
                             </select>
                         </div>
                     </div>
 
-                    <div className={styles.formRow}>
+                    {/* <div className={styles.formRow}>
                         <div className={styles.formGroup}>
                             <label>Price Type</label>
                             <select name="priceType" value={formData.priceType} onChange={handleChange}>
@@ -236,7 +234,7 @@ const AdminServicePlansForm = () => {
                                 <option value="quarterly">Quarterly</option>
                             </select>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className={styles.formGroup}>
                         <label>Description</label>
@@ -262,7 +260,7 @@ const AdminServicePlansForm = () => {
                             Enter each feature separated by commas. They will be stored as a JSON array.
                         </div>
                     </div>
-
+{/* 
                     <div className={styles.formRow}>
                         <div className={styles.formGroup}>
                             <label>Sort Order</label>
@@ -286,8 +284,8 @@ const AdminServicePlansForm = () => {
                                 Featured Plan
                             </label>
                         </div>
-                    </div>
-
+                    </div> */}
+{/* 
                     <div className={`${styles.formGroup} ${styles.checkboxGroup}`}>
                         <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
                             <input
@@ -298,7 +296,7 @@ const AdminServicePlansForm = () => {
                             />
                             Plan is Active
                         </label>
-                    </div>
+                    </div> */}
 
                     <div className={styles.formActions}>
                         <button type="submit" className={styles.btnPrimary} disabled={loading}>

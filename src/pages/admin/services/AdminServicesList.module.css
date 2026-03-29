@@ -193,6 +193,18 @@
     font-size: 12px;
     font-weight: 600;
 }
+
+.activeBadge {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    background: rgba(239, 68, 68, 0.1);
+    color: #16db89;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
 .actionBtnPlans {
     background: none;
     border: none;

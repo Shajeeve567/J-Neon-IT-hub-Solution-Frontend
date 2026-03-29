@@ -131,7 +131,9 @@ const AdminServicesList = () => {
                                 </ul>
                             ) : null}
 
-                            {!service.isActive && (
+                            {service.active ? (
+                                <div className={styles.activeBadge}>Active</div>
+                            ) : (
                                 <div className={styles.inactiveBadge}>Inactive</div>
                             )}
                         </div>
