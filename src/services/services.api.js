@@ -81,6 +81,8 @@ export const deleteService = async (id) => {
   }
 };
 
+<<<<<<< HEAD
+=======
 
 export const createServicePlan = async (planData) => {
   try {
@@ -169,3 +171,4 @@ export const deleteServicePlan = async (planId) => {
     throw error;
   }
 };
+>>>>>>> origin/dev

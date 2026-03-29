@@ -16,6 +16,13 @@ import AdminPortfolioList from './pages/admin/AdminPortfolioList'
 import AdminPortfolioForm from './pages/admin/AdminPortfolioForm'
 import AdminUsers from './pages/admin/UserManagement'
 
+<<<<<<< HEAD
+import AdminAddService from './pages/admin/services/AdminAddService'
+import AdminServicesList from './pages/admin/services/AdminServicesList'
+
+import AdminInquiries from './pages/admin/AdminInquiries'
+import AdminEditService from './pages/admin/services/AdminEditService'
+=======
 import AdminEditService from './pages/admin/services/AdminEditService'
 import AdminAddService from './pages/admin/services/AdminAddService'
 import AdminServicesList from './pages/admin/services/AdminServicesList'
@@ -23,6 +30,7 @@ import AdminServicesList from './pages/admin/services/AdminServicesList'
 import AdminServicePlansList from "./pages/admin/services/AdminServicePlansList";
 import AdminServicePlansForm from "./pages/admin/services/AdminServicePlansForm";
 import AdminMedia from "./pages/admin/AdminMedia";
+>>>>>>> origin/dev
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -56,6 +64,10 @@ export default function App() {
         <Route path="/admin/services/add" element={<AdminLayout><AdminAddService /></AdminLayout>} />
         <Route path="/admin/services/edit/:id" element={<AdminLayout><AdminEditService /></AdminLayout>} />
 
+<<<<<<< HEAD
+        <Route path="/admin/inquiries" element={<AdminLayout><AdminInquiries /></AdminLayout>} />
+        <Route path="/admin/users" element={<AdminLayout><AdminUsers /></AdminLayout>} />
+=======
         {/* Service Plans Routes - Wrapped with AdminLayout */}
         <Route path="/admin/services/:serviceId/plans" element={<AdminLayout><AdminServicePlansList /></AdminLayout>} />
         <Route path="/admin/services/:serviceId/plans/add" element={<AdminLayout><AdminServicePlansForm /></AdminLayout>} />
@@ -64,6 +76,7 @@ export default function App() {
         <Route path="/admin/media" element={<AdminLayout><AdminMedia /></AdminLayout>} />
 
         <Route path="/admin/users" element={<AdminLayout><AdminUsers/></AdminLayout>} />
+>>>>>>> origin/dev
       </Routes>
     </>
   )
