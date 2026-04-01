@@ -1,11 +1,10 @@
 import axios from 'axios';
 
 // Ensure this matches your backend endpoint
-const API_URL = '/api/portfolio-items';
-
+const API_URL = 'http://localhost:8080/api/portfolio-items';
 export const getPortfolioItems = async () => {
     try {
-        const response = await axios.get(API_URL);
+        const response = await axios.get(`${API_URL}/get-all`);
         return response.data;
     } catch (error) {
         console.error("Error fetching portfolio items", error);
@@ -25,7 +24,7 @@ export const getPortfolioItemById = async (id) => {
 
 export const createPortfolioItem = async (portfolioData) => {
     try {
-        const response = await axios.post(API_URL, portfolioData);
+        const response = await axios.post(`${API_URL}/create`, portfolioData);
         return response.data;
     } catch (error) {
         console.error("Error creating portfolio item", error);
@@ -66,7 +65,7 @@ export const deletePortfolioItem = async (id) => {
 
 // --- Portfolio Images ---
 
-const IMAGE_API_URL = '/api/admin/portfolio-items';
+const IMAGE_API_URL = `http://localhost:8080/api/admin/portfolio-items`
 
 export const getPortfolioImages = async (portfolioItemId) => {
     try {
