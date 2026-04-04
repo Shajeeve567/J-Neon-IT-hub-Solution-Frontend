@@ -31,7 +31,16 @@ export default function AdminChatbotDocs() {
 
     const handleFileChange = (e) => {
         if (e.target.files && e.target.files[0]) {
-            setFile(e.target.files[0]);
+            const selectedFile = e.target.files[0];
+            // Check if file is a PDF
+            if (selectedFile.type !== 'application/pdf' && !selectedFile.name.toLowerCase().endsWith('.pdf')) {
+                setError('Warning: Only PDF files are allowed for the chatbot. Please select a valid PDF document.');
+                setFile(null);
+                e.target.value = ''; // Clear the input
+                return;
+            }
+            setError(''); // Clear any previous errors
+            setFile(selectedFile);
         }
     };
 
