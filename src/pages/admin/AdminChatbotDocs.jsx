@@ -8,7 +8,7 @@ export default function AdminChatbotDocs() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [uploading, setUploading] = useState(false);
-    
+
     // Form state
     const [file, setFile] = useState(null);
 
@@ -53,11 +53,11 @@ export default function AdminChatbotDocs() {
             await chatbotService.uploadDocument(file);
             setFile(null);
             fetchDocuments(); // Refresh list
-            
+
             // clear the input
             const fileInput = document.getElementById('docFileInput');
             if (fileInput) fileInput.value = '';
-            
+
         } catch (err) {
             setError(err.response?.data?.detail || err.message || 'Failed to upload document');
         } finally {
@@ -76,18 +76,18 @@ export default function AdminChatbotDocs() {
             <div className={styles.uploadSection}>
                 <form className={styles.uploadForm} onSubmit={handleUpload}>
                     <div className={styles.formGroup}>
-                        <label className={styles.label}>Select PDF File *</label>
-                        <input 
+                        <label htmlFor="docFileInput" className={styles.label}>Select PDF File *</label>
+                        <input
                             id="docFileInput"
-                            type="file" 
-                            className={styles.fileInput} 
+                            type="file"
+                            className={styles.fileInput}
                             onChange={handleFileChange}
                             accept=".pdf,application/pdf"
                             required
                         />
                     </div>
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         className={styles.uploadBtn}
                         disabled={!file || uploading}
                     >
